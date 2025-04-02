@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_styles.dart' as styles;
+import '../services/auth_service.dart';  // Import AuthService
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -131,34 +134,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 30),
                     CustomButton(
-                      text: 'Sign In',
-                      onPressed: _submitForm,
+                      text: _isLoading ? 'Signing In...' : 'Sign In',
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) return;
+
+                        setState(() => _isLoading = true);
+
+                        try {
+                          // Call the authentication service
+                          User? user = await AuthService().signin(
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim(),
+                          );
+
+                          // If authentication is successful (user is not null), navigate to dashboard
+                          if (user != null) {
+                            Navigator.pushReplacementNamed(context, '/dashboard');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Invalid email or password')),
+                            );
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())),
+                          );
+                        }
+
+                        setState(() => _isLoading = false);
+                      },
                       isLoading: _isLoading,
                     ),
-                    const SizedBox(height: 30),
-                    Center(
-                      child: Text(
-                        'Or sign in with',
-                        style: styles.AppStyles.bodyText.copyWith(
-                          color: AppColors.textLight,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Image.asset('assets/google.png', width: 24),
-                          onPressed: () {},
-                        ),
-                        const SizedBox(width: 20),
-                        IconButton(
-                          icon: Image.asset('assets/facebook.png', width: 24),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
+
+
+
+
                     const Spacer(),
                     Center(
                       child: TextButton(

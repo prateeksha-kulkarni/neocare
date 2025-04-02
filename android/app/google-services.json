@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "723323187687",
+    "project_id": "firebase-auth-3011",
+    "storage_bucket": "firebase-auth-3011.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723323187687:android:ff67e1256c00ed04d78d42",
+        "android_client_info": {
+          "package_name": "com.example.neocaretry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8D2RvI093WOGI9OUWPeW4gN20CgyfrBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
