@@ -3,7 +3,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_styles.dart' as styles;
-import '../services/auth_service.dart';  // Import AuthService
+import '../services/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -45,7 +45,24 @@ class _SignupScreenState extends State<SignupScreen> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      Navigator.pushReplacementNamed(context, '/baby-profile');
+
+      // Show success prompt
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Success'),
+          content: const Text('User Created Successfully!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                Navigator.pushReplacementNamed(context, '/dashboard'); // Redirect
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
@@ -75,55 +92,62 @@ class _SignupScreenState extends State<SignupScreen> {
                 Text('Fill in your details to get started',
                     style: styles.AppStyles.bodyText),
                 const SizedBox(height: 40),
-                CustomTextField(
-                  label: 'Full Name',
-                  controller: _nameController,
-                  hintText: 'John Doe',
-                  prefixIcon: Icon(Icons.person, color: AppColors.textLight),
-                  validator: (value) =>
-                  value!.isEmpty ? 'Please enter your name' : null,
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  label: 'Email Address',
-                  controller: _emailController,
-                  hintText: 'your@email.com',
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Icon(Icons.email, color: AppColors.textLight),
-                  validator: (value) {
-                    if (value!.isEmpty) return 'Please enter your email';
-                    if (!RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\$')
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  label: 'Password',
-                  controller: _passwordController,
-                  hintText: '••••••••',
-                  obscureText: true,
-                  prefixIcon: Icon(Icons.lock, color: AppColors.textLight),
-                  validator: (value) {
-                    if (value!.isEmpty) return 'Please enter your password';
-                    if (value.length < 6) return 'Password must be at least 6 characters';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  label: 'Confirm Password',
-                  controller: _confirmPasswordController,
-                  hintText: '••••••••',
-                  obscureText: true,
-                  prefixIcon: Icon(Icons.lock_outline, color: AppColors.textLight),
-                  validator: (value) {
-                    if (value!.isEmpty) return 'Please confirm your password';
-                    if (value != _passwordController.text) return 'Passwords do not match';
-                    return null;
-                  },
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        label: 'Full Name',
+                        controller: _nameController,
+                        hintText: 'John Doe',
+                        prefixIcon: Icon(Icons.person, color: AppColors.textLight),
+                        validator: (value) =>
+                        value!.isEmpty ? 'Please enter your name' : null,
+                      ),
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        label: 'Email Address',
+                        controller: _emailController,
+                        hintText: 'your@email.com',
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIcon: Icon(Icons.email, color: AppColors.textLight),
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Please enter your email';
+                          if (!RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+                              .hasMatch(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        label: 'Password',
+                        controller: _passwordController,
+                        hintText: '••••••••',
+                        obscureText: true,
+                        prefixIcon: Icon(Icons.lock, color: AppColors.textLight),
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Please enter your password';
+                          if (value.length < 6) return 'Password must be at least 6 characters';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        label: 'Confirm Password',
+                        controller: _confirmPasswordController,
+                        hintText: '••••••••',
+                        obscureText: true,
+                        prefixIcon: Icon(Icons.lock_outline, color: AppColors.textLight),
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Please confirm your password';
+                          if (value != _passwordController.text) return 'Passwords do not match';
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -134,15 +158,19 @@ class _SignupScreenState extends State<SignupScreen> {
                       activeColor: AppColors.primary,
                     ),
                     Expanded(
-                      child: Text('I agree to the Terms and Privacy Policy',
-                          style: styles.AppStyles.bodyText),
+                      child: Text(
+                        'I agree to the Terms and Privacy Policy',
+                        style: styles.AppStyles.bodyText,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 30),
-                CustomButton(text: 'Create Account', onPressed: () async{
-                  await AuthService().signup(email: _emailController.text, password: _passwordController.text);
-                }, isLoading: _isLoading),
+                CustomButton(
+                  text: 'Create Account',
+                  onPressed: _submitForm,
+                  isLoading: _isLoading,
+                ),
                 const SizedBox(height: 30),
                 Center(
                   child: GestureDetector(

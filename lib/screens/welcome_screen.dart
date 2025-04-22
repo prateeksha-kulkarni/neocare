@@ -37,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 Text(
-                  'Welcome to BabyCare',
+                  'Welcome to ShishuCare',
                   style: styles.AppStyles.heading1.copyWith(
                     color: Colors.white,
                     height: 1.2,

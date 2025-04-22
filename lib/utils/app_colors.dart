@@ -5,16 +5,17 @@ import 'app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Soft pastel color scheme
-  static const Color primary = Color(0xFF8BD3DD);  // Soft teal
-  static const Color secondary = Color(0xFFF5A3B7); // Blush pink
-  static const Color accent = Color(0xFFFFD166);   // Warm yellow
-  static const Color background = Color(0xFFFEF6F6); // Very light pink
-  static const Color surface = Color(0xFFFFFFFF);   // Pure white
-  static const Color textDark = Color(0xFF2B2D42);  // Dark blue-gray
-  static const Color textLight = Color(0xFF8D99AE); // Light gray-blue
-  static const Color error = Color(0xFFEF476F);     // Vibrant pink-red
-  static const Color success = Color(0xFF06D6A0);   // Mint green
+  // Bright & Playful BabyCare Color Scheme
+  static const Color primary = Color(0xFF8A9EFF);      // Periwinkle Blue
+  static const Color secondary = Color(0xFFFFB6C1);     // Light Pink (like #FFD6E7)
+  static const Color accent = Color(0xFF7FDBFF);        // Sky Blue (accent)
+  static const Color background = Color(0xFFFEF9FF);    // Near-white Lavender
+  static const Color surface = Color(0xFFFFFFFF);       // Pure White
+  static const Color textDark = Color(0xFF3A3B3C);      // Dark Gray
+  static const Color textLight = Color(0xFFA5A5A5);     // Soft Gray
+  static const Color error = Color(0xFFFF6B6B);         // Coral Red
+  static const Color success = Color(0xFF77DD77);       // Mint Green
+  static const Color milestone = Color(0xFFFFD166);     // Warm Yellow (for milestones)
 }
 
 

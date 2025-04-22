@@ -1,378 +1,210 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_button.dart';
-import '../utils/app_colors.dart';
-import '../utils/app_styles.dart' as styles;
+import 'package:fl_chart/fl_chart.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _currentIndex = 0;
-  final List<Map<String, dynamic>> _growthData = [
-    {'month': 'Jan', 'weight': 3.5, 'height': 50},
-    {'month': 'Feb', 'weight': 4.2, 'height': 54},
-    {'month': 'Mar', 'weight': 4.8, 'height': 58},
-    {'month': 'Apr', 'weight': 5.3, 'height': 61},
-  ];
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFF6F8FB),
       appBar: AppBar(
-        title: Text('Baby Dashboard', style: styles.AppStyles.heading2),
-        centerTitle: true,
+        backgroundColor: Color(0xFF8A9EFF),
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.textDark,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications, color: AppColors.textDark),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.more_vert, color: AppColors.textDark),
-            onPressed: () {},
-          ),
-        ],
+        title: const Text(
+          'ShishuCare',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: styles.AppStyles.screenPadding,
-        child: Column(
-          children: [
-            _buildBabyProfileHeader(),
-            const SizedBox(height: 24),
-            _buildQuickActionsRow(),
-            const SizedBox(height: 24),
-            _buildGrowthStatsSection(),
-            const SizedBox(height: 24),
-            _buildMilestonesSection(),
-            const SizedBox(height: 24),
-            _buildRecentActivitySection(),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _buildBottomAppBar(),
-    );
-  }
-
-  Widget _buildBabyProfileHeader() {
-    return Container(
-      padding: styles.AppStyles.cardPadding,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-        boxShadow: styles.AppStyles.cardShadow,
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primary.withOpacity(0.1),
-              image: const DecorationImage(
-                image: NetworkImage('https://images.pexels.com/photos/1620765/pexels-photo-1620765.jpeg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Emma Johnson', style: styles.AppStyles.heading2),
-                const SizedBox(height: 4),
-                Text('6 months old', style: styles.AppStyles.bodyText),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(Icons.cake, size: 16, color: AppColors.textLight),
-                    const SizedBox(width: 4),
-                    Text('Born: April 12, 2023', style: styles.AppStyles.bodyText),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildQuickActionsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildQuickActionButton(Icons.local_dining, 'Feed'),
-        _buildQuickActionButton(Icons.bedtime, 'Sleep'),
-        _buildQuickActionButton(Icons.medical_services, 'Medication'),
-        _buildQuickActionButton(Icons.child_friendly, 'Diaper'),
-      ],
-    );
-  }
-
-  Widget _buildQuickActionButton(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: AppColors.primary, size: 28),
-        ),
-        const SizedBox(height: 8),
-        Text(label, style: styles.AppStyles.bodyText),
-      ],
-    );
-  }
-
-  Widget _buildGrowthStatsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Growth Stats', style: styles.AppStyles.heading2),
-        const SizedBox(height: 16),
-        Container(
-          padding: styles.AppStyles.cardPadding,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-            boxShadow: styles.AppStyles.cardShadow,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildStatCard('Weight', '5.3 kg', '+0.5 kg', Icons.monitor_weight, AppColors.primary),
-                  _buildStatCard('Height', '61 cm', '+3 cm', Icons.height, AppColors.secondary),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildStatCard('Head Circ.', '40 cm', '+1 cm', Icons.face, AppColors.accent),
-                  _buildStatCard('BMI', '14.2', 'Healthy', Icons.show_chart, AppColors.success),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatCard(String title, String value, String change, IconData icon, Color color) {
-    return Expanded(
-      child: Container(
-        padding: styles.AppStyles.cardPadding,
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(icon, size: 16, color: color),
-                ),
-                const Spacer(),
-                Text(change, style: styles.AppStyles.bodyText.copyWith(color: color)),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(title, style: styles.AppStyles.bodyText.copyWith(color: AppColors.textLight)),
-            const SizedBox(height: 4),
-            Text(value, style: styles.AppStyles.heading2.copyWith(fontSize: 20)),
+            _buildBabyDetails(),
+            const SizedBox(height: 20),
+            _buildChartSection(),
+            const SizedBox(height: 20),
+            _buildStatusList(),
+            const SizedBox(height: 20),
+            _buildTipsSection(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMilestonesSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Milestones', style: styles.AppStyles.heading2),
-            TextButton(
-              onPressed: () {},
-              child: Text('View All', style: styles.
-              AppStyles.bodyText.copyWith(color: AppColors.primary)),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              _buildMilestoneCard('First Smile', '2 months', true),
-              const SizedBox(width: 12),
-              _buildMilestoneCard('Rolling Over', '4 months', true),
-              const SizedBox(width: 12),
-              _buildMilestoneCard('Sitting Up', 'Coming soon', false),
-            ],
+  Widget _buildBabyDetails() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Color(0xFF8A9EFF),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Baby Details',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ),
+          SizedBox(height: 8),
+          Text('ID: 12345 | Age: 6 Months | Gender: Female',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChartSection() {
+    return Column(
+      children: [
+        _buildChartCard('Heart Rate & SpO₂', ['Heart Rate', 'SpO₂']),
+        const SizedBox(height: 16),
+        _buildChartCard('Internal Temperature', ['Internal Temp (°C)']),
+        const SizedBox(height: 16),
+        _buildChartCard('Environment (Temp & Humidity)', ['External Temp', 'Humidity']),
       ],
     );
   }
 
-  Widget _buildMilestoneCard(String title, String subtitle, bool achieved) {
+  Widget _buildChartCard(String title, List<String> labels) {
     return Container(
-      width: 160,
-      padding: styles.AppStyles.cardPadding,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: achieved ? AppColors.primary.withOpacity(0.1) : Colors.white,
-        borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-        border: Border.all(
-          color: achieved ? AppColors.primary : AppColors.textLight.withOpacity(0.2),
-          width: 1,
-        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: achieved ? AppColors.primary : AppColors.textLight.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              achieved ? Icons.check : Icons.hourglass_empty,
-              color: achieved ? Colors.white : AppColors.textLight,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(title, style: styles.AppStyles.heading3),
-          const SizedBox(height: 4),
-          Text(subtitle, style: styles.AppStyles.bodyText),
+          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          SizedBox(height: 220, child: _buildSampleChart(labels)),
         ],
       ),
     );
   }
 
-  Widget _buildRecentActivitySection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Recent Activity', style: styles.AppStyles.heading2),
-            TextButton(
-              onPressed: () {},
-              child: Text('View All', style: styles.AppStyles.bodyText.copyWith(color: AppColors.primary)),
+  Widget _buildSampleChart(List<String> labels) {
+    return LineChart(
+      LineChartData(
+        gridData: FlGridData(show: true),
+        titlesData: FlTitlesData(
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 1,
+              getTitlesWidget: (value, _) {
+                switch (value.toInt()) {
+                  case 0:
+                    return const Text('12:00');
+                  case 1:
+                    return const Text('12:10');
+                  case 2:
+                    return const Text('12:20');
+                  case 3:
+                    return const Text('12:30');
+                  case 4:
+                    return const Text('12:40');
+                  default:
+                    return const Text('');
+                }
+              },
             ),
-          ],
+          ),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 10,
+              getTitlesWidget: (value, _) {
+                if ([95, 105, 115, 125].contains(value.toInt())) {
+                  return Text('${value.toInt()}');
+                }
+                return const Text('');
+              },
+            ),
+          ),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
         ),
-        const SizedBox(height: 16),
-        Column(
-          children: [
-            _buildActivityItem('Feeding', '30 min ago', Icons.local_dining),
-            const SizedBox(height: 12),
-            _buildActivityItem('Sleep', '2 hours ago', Icons.bedtime),
-            const SizedBox(height: 12),
-            _buildActivityItem('Diaper Change', '3 hours ago', Icons.child_friendly),
-          ],
-        ),
-      ],
+        borderData: FlBorderData(show: true),
+        lineBarsData: [
+          LineChartBarData(
+            spots: [const FlSpot(0, 115), const FlSpot(1, 120), const FlSpot(2, 118), const FlSpot(3, 112), const FlSpot(4, 119)],
+            isCurved: true,
+            color: const Color(0xFF8A9EFF),
+            barWidth: 3,
+            belowBarData: BarAreaData(show: false),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildActivityItem(String title, String time, IconData icon) {
+  Widget _buildStatusList() {
+    final List<Map<String, dynamic>> statusItems = [
+      {'title': 'Actigraphy', 'status': 'Normal', 'icon': Icons.directions_run},
+      {'title': 'Safe Sleep', 'status': 'Safe', 'icon': Icons.bedtime},
+      {'title': 'Intrusion', 'status': 'None', 'icon': Icons.security},
+      {'title': 'Emotion', 'status': 'Happy', 'icon': Icons.emoji_emotions},
+      {'title': 'Gas Concentration', 'status': 'Normal', 'icon': Icons.cloud},
+      {'title': 'Safety', 'status': 'Good', 'icon': Icons.health_and_safety},
+    ];
+
+    return Column(
+      children: statusItems
+          .map((item) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: _buildStatusCard(item['title'], item['status'], item['icon']),
+      ))
+          .toList(),
+    );
+  }
+
+  Widget _buildStatusCard(String title, String status, IconData icon) {
     return Container(
-      padding: styles.AppStyles.cardPadding,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-        boxShadow: styles.AppStyles.cardShadow,
+        color: const Color(0xFF8A9EFF),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: AppColors.primary),
-          ),
-          const SizedBox(width: 16),
+          Icon(icon, color: Colors.white, size: 24),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: styles.AppStyles.heading3.copyWith(fontSize: 16)),
-                const SizedBox(height: 4),
-                Text(time, style: styles.AppStyles.bodyText),
+                Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(height: 2),
+                Text('Status: $status',
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white)),
               ],
             ),
           ),
-          Icon(Icons.chevron_right, color: AppColors.textLight),
         ],
       ),
     );
   }
 
-  Widget _buildBottomAppBar() {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: Icon(Icons.home, color: _currentIndex == 0 ? AppColors.primary : AppColors.textLight),
-            onPressed: () => setState(() => _currentIndex = 0),
-          ),
-          IconButton(
-            icon: Icon(Icons.insights, color: _currentIndex == 1 ? AppColors.primary : AppColors.textLight),
-            onPressed: () => setState(() => _currentIndex = 1),
-          ),
-          const SizedBox(width: 40), // Space for FAB
-          IconButton(
-            icon: Icon(Icons.event_note, color: _currentIndex == 2 ? AppColors.primary : AppColors.textLight),
-            onPressed: () => setState(() => _currentIndex = 2),
-          ),
-          IconButton(
-            icon: Icon(Icons.settings, color: _currentIndex == 3 ? AppColors.primary : AppColors.textLight),
-            onPressed: () => setState(() => _currentIndex = 3),
-          ),
+  Widget _buildTipsSection() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3))
         ],
       ),
+
     );
   }
 }
