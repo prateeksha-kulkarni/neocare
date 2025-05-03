@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Bright & Playful BabyCare Color Scheme
-  static const Color primary = Color(0xFF8A9EFF);      // Periwinkle Blue
+  static const Color primary = Color(0xFF5D5FEF);      // Periwinkle Blue
   static const Color secondary = Color(0xFFFFB6C1);     // Light Pink (like #FFD6E7)
   static const Color accent = Color(0xFF7FDBFF);        // Sky Blue (accent)
   static const Color background = Color(0xFFFEF9FF);    // Near-white Lavender
@@ -16,6 +16,9 @@ class AppColors {
   static const Color error = Color(0xFFFF6B6B);         // Coral Red
   static const Color success = Color(0xFF77DD77);       // Mint Green
   static const Color milestone = Color(0xFFFFD166);     // Warm Yellow (for milestones)
+  static const Color header = Color(0xFF432C81
+  );     // Warm Yellow (for milestones)
+
 }
 
 

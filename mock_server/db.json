@@ -1,0 +1,10 @@
+{
+  "data": {
+    "safe_sleep": "Safe",
+    "actigraphy": "Normal",
+    "intrusion": "Safe",
+    "emotion": "Happy",
+    "gas_conc": "80.0 ppm",
+    "safety": "Safe"
+  }
+}

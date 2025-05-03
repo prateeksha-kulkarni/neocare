@@ -9,60 +9,52 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary.withOpacity(0.9),
-              AppColors.secondary.withOpacity(0.8),
-            ],
-          ),
-        ),
-        child: SafeArea(
+      backgroundColor: const Color(0xFF625BFF), // Replace with AppColors.primary if needed
+      body: SafeArea(
+        child: Center(
           child: Padding(
-            padding: styles.AppStyles.screenPadding,
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(flex: 2),
+                const SizedBox(height: 24),
+                Text(
+                  'Welcome to',
+                  style: styles.AppStyles.bodyText.copyWith(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Text(
+                //   'ShishuCare',
+                //   style: styles.AppStyles.heading1.copyWith(
+                //     fontSize: 32,
+                //     color: Colors.white,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
+                const SizedBox(height: 36),
                 Hero(
                   tag: 'app-logo',
-                  child: Icon(
-                    Icons.child_care,
-                    size: 80,
-                    color: Colors.white,
+                  child: Image.asset(
+                    'lib/assets/images/baby_logo1.png', // Replace with your actual asset path
+                    height: 150,
                   ),
                 ),
-                const SizedBox(height: 32),
-                Text(
-                  'Welcome to ShishuCare',
-                  style: styles.AppStyles.heading1.copyWith(
-                    color: Colors.white,
-                    height: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Track your baby\'s growth, milestones, and daily activities all in one place.',
-                  style: styles.AppStyles.bodyText.copyWith(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 18,
-                  ),
-                ),
-                const Spacer(flex: 3),
+                const SizedBox(height: 48),
                 CustomButton(
-                  text: 'Get Started',
+                  text: 'Sign Up',
                   onPressed: () => Navigator.pushNamed(context, '/signup'),
+                  isPrimary: false,
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
-                  text: 'I already have an account',
+                  text: 'Login',
                   onPressed: () => Navigator.pushNamed(context, '/login'),
                   isPrimary: false,
                 ),
-                const SizedBox(height: 24),
               ],
             ),
           ),

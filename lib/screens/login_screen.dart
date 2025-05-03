@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
-  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -46,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            color: AppColors.background,
+            color: Colors.white,
           ),
           child: SafeArea(
             child: Padding(
@@ -63,8 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     Text(
                       'Welcome Back!',
-                      style: styles.AppStyles.heading1,
+                      style: styles.AppStyles.heading1.copyWith(color: AppColors.header),
                     ),
+
                     const SizedBox(height: 8),
                     Text(
                       'Please sign in to continue',
@@ -106,32 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              _rememberMe = value!;
-                            });
-                          },
-                          activeColor: AppColors.primary,
-                        ),
-                        Text('Remember me', style: styles.AppStyles.bodyText),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            // Navigate to forgot password screen
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: styles.AppStyles.bodyText.copyWith(
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+
                     const SizedBox(height: 30),
                     CustomButton(
                       text: _isLoading ? 'Signing In...' : 'Sign In',

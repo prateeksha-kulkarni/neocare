@@ -8,6 +8,7 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.textDark,
     letterSpacing: -0.5,
+    fontFamily: 'Raleway',
   );
 
   static const TextStyle heading2 = TextStyle(
@@ -15,24 +16,28 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textDark,
     letterSpacing: -0.3,
+    fontFamily: 'Raleway',
   );
 
   static const TextStyle heading3 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w500,
     color: AppColors.textDark,
+    fontFamily: 'Raleway',
   );
 
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,
     color: AppColors.textLight,
     height: 1.5,
+    fontFamily: 'Raleway',
   );
 
   static const TextStyle buttonText = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
+    fontFamily: 'Raleway',
   );
 
   // Spacing and layout

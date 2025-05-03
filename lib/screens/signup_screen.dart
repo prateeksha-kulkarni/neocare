@@ -32,12 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
-    if (!_acceptTerms) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please accept terms and conditions')),
-      );
-      return;
-    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -75,6 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -87,10 +83,18 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () => Navigator.pop(context),
                 ),
                 const SizedBox(height: 24),
-                Text('Create Account', style: styles.AppStyles.heading1),
+                Text(
+                  'Create Account',
+                  style: styles.AppStyles.heading1.copyWith(
+                    color: AppColors.header,
+                    fontFamily: 'Raleway-Bold',
+                  ),
+                ),
                 const SizedBox(height: 8),
-                Text('Fill in your details to get started',
-                    style: styles.AppStyles.bodyText),
+                Text(
+                  'Fill in your details to get started',
+                  style: styles.AppStyles.bodyText.copyWith(fontFamily: 'Raleway-Regular'),
+                ),
                 const SizedBox(height: 40),
                 Form(
                   key: _formKey,
@@ -101,8 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         controller: _nameController,
                         hintText: 'John Doe',
                         prefixIcon: Icon(Icons.person, color: AppColors.textLight),
-                        validator: (value) =>
-                        value!.isEmpty ? 'Please enter your name' : null,
+                        validator: (value) => value!.isEmpty ? 'Please enter your name' : null,
                       ),
                       const SizedBox(height: 20),
                       CustomTextField(
@@ -113,8 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: Icon(Icons.email, color: AppColors.textLight),
                         validator: (value) {
                           if (value!.isEmpty) return 'Please enter your email';
-                          if (!RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
-                              .hasMatch(value)) {
+                          if (!RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$').hasMatch(value)) {
                             return 'Please enter a valid email';
                           }
                           return null;
@@ -150,21 +152,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _acceptTerms,
-                      onChanged: (value) => setState(() => _acceptTerms = value!),
-                      activeColor: AppColors.primary,
-                    ),
-                    Expanded(
-                      child: Text(
-                        'I agree to the Terms and Privacy Policy',
-                        style: styles.AppStyles.bodyText,
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 30),
                 CustomButton(
                   text: 'Create Account',
@@ -177,7 +164,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: () => Navigator.pushNamed(context, '/login'),
                     child: Text(
                       'Already have an account? Sign In',
-                      style: styles.AppStyles.bodyText.copyWith(color: AppColors.primary),
+                      style: styles.AppStyles.bodyText.copyWith(
+                        color: AppColors.primary,
+                        fontFamily: 'Raleway-SemiBold',
+                      ),
                     ),
                   ),
                 ),

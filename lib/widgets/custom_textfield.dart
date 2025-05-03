@@ -53,28 +53,30 @@ class CustomTextField extends StatelessWidget {
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: styles.AppStyles.bodyText,
+            hintStyle: styles.AppStyles.bodyText.copyWith(
+              color: AppColors.textLight,
+            ),
             filled: true,
             fillColor: AppColors.surface,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-              borderSide: BorderSide(color: AppColors.textLight.withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
-              borderSide: BorderSide(color: AppColors.textLight.withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
+              borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(styles.AppStyles.borderRadius),
+              borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(color: AppColors.error),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
+              horizontal: 18,
+              vertical: 12,
             ),
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
