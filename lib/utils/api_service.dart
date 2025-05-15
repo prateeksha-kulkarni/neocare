@@ -23,6 +23,18 @@ Future<Map<String, dynamic>> fetchLatestHumidity() async {
   return await _fetchData('humidity_percent');
 }
 
+Future<Map<String, dynamic>> fetchLatestIntrusionStatus() async {
+  return await _fetchData('intrusion_detected');
+}
+
+Future<Map<String, dynamic>> fetchLatestSafeSleepStatus() async {
+  return await _fetchData('safe_sleep');
+}
+
+Future<Map<String, dynamic>> fetchLatestEmotionStatus() async {
+  return await _fetchData('emotion');
+}
+
 Future<Map<String, dynamic>> _fetchData(String key) async {
   try {
     final response = await http.get(Uri.parse(baseUrl));

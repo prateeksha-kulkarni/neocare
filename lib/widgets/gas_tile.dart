@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import '../utils/api_service.dart';
 import '../utils/app_colors.dart';
 
@@ -12,15 +13,52 @@ class GasTile extends StatefulWidget {
 class _GasTileState extends State<GasTile> {
   double? gasPPM;
   String? timestamp;
+  bool _dialogShown = false;
 
   @override
   void initState() {
     super.initState();
-    fetchLatestGasConcentration().then((data) {
-      setState(() {
-        gasPPM = data['gas_concentration_ppm'];
-        timestamp = data['timestamp'];
-      });
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final data = await fetchLatestGasConcentration();
+    if (!mounted) return;
+    setState(() {
+      gasPPM = data['gas_concentration_ppm'];
+      timestamp = data['timestamp'];
+    });
+
+    if (gasPPM != null && gasPPM! > 80 && !_dialogShown) {
+      _dialogShown = true;
+      showGasAlertDialog();
+    }
+  }
+
+
+  void showGasAlertDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text("Warning!"),
+        content: const Text(
+            "High gas concentration detected. Please check the environment."),
+        backgroundColor: Colors.red[100],
+        titleTextStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.red,
+        ),
+        contentTextStyle: const TextStyle(fontSize: 16),
+      ),
+    );
+
+    // Auto-dismiss the dialog after 30 seconds
+    Future.delayed(const Duration(seconds: 30), () {
+      if (mounted) {
+        Navigator.of(context, rootNavigator: true).pop(); // Close dialog
+      }
     });
   }
 

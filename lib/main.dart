@@ -6,6 +6,8 @@ import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/baby_profile_screen.dart';
 import 'screens/dashboard_screen.dart';
+import 'screens/health_stat_screen.dart';
+import 'screens/activity_stat_screen.dart';
 import 'utils/app_colors.dart';
 
 Future<void> main() async{
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignupScreen(),
         '/baby-profile': (context) => const BabyProfileScreen(),
         '/dashboard': (context) => const DashboardScreen(),
+        '/health': (context) => const HealthStatScreen(),
+        '/activity': (context) => const ActivityStatScreen(),
       },
     );
   }
